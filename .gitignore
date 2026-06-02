@@ -3,3 +3,4 @@
 /.venv/
 /.idea/
 /JD/
+__pycache__/

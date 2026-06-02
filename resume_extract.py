@@ -7,26 +7,31 @@ from typing import Optional, List
 import pdfplumber
 from dotenv import load_dotenv
 from openai import OpenAI
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 load_dotenv()
 
 
-class Education(BaseModel):
+class _Model(BaseModel):
+    # LLM 常把年份/电话等当数字返回（如 year: 2021），允许数字自动转成字符串
+    model_config = ConfigDict(coerce_numbers_to_str=True)
+
+
+class Education(_Model):
     degree: Optional[str] = Field(None, description="学历，如 本科/硕士/博士")
     major: Optional[str] = None
     school: Optional[str] = None
     year: Optional[str] = None
 
 
-class WorkExperience(BaseModel):
+class WorkExperience(_Model):
     company: Optional[str] = None
     title: Optional[str] = None
     period: Optional[str] = Field(None, description="时间段，如 2021-至今")
     highlights: List[str] = Field(default_factory=list, description="该段经历的关键点")
 
 
-class ResumeProfile(BaseModel):
+class ResumeProfile(_Model):
     name: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
