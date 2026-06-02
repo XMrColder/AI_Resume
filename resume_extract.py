@@ -13,7 +13,6 @@ load_dotenv()
 
 
 class _Model(BaseModel):
-    # LLM 常把年份/电话等当数字返回（如 year: 2021），允许数字自动转成字符串
     model_config = ConfigDict(coerce_numbers_to_str=True)
 
 
