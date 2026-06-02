@@ -1,15 +1,16 @@
+import json
 import os
 import re
 import sys
-import json
 from typing import Optional, List
 
 import pdfplumber
+from dotenv import load_dotenv
 from openai import OpenAI
 from pydantic import BaseModel, Field, ValidationError
-from dotenv import load_dotenv
 
 load_dotenv()
+
 
 class Education(BaseModel):
     degree: Optional[str] = Field(None, description="学历，如 本科/硕士/博士")
@@ -94,10 +95,10 @@ def _strip_json(s: str) -> str:
 
 
 def extract_profile(
-    client: OpenAI,
-    resume_text: str,
-    model: str = "deepseek-v4-pro",
-    max_retries: int = 2,
+        client: OpenAI,
+        resume_text: str,
+        model: str = "deepseek-v4-pro",
+        max_retries: int = 2,
 ) -> ResumeProfile:
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
