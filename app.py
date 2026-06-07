@@ -75,12 +75,12 @@ use_embedding = st.sidebar.toggle("启用 Embedding 语义匹配", value=True)
 st.title("AI 简历筛选助手")
 jd_text = st.text_area("① 粘贴岗位 JD", height=180, placeholder="把招聘 JD 贴在这里……")
 files = st.file_uploader("② 上传简历 PDF（可多选）", type=["pdf"], accept_multiple_files=True)
-run = st.button("③ 开始筛选", type="primary",
+run = st.button("开始筛选", type="primary",
                 disabled=not (jd_text and files and api_key))
 
 if run:
     client = get_client(api_key)
-    with st.spinner("解析 JD、提取并匹配中……（首次启用 embedding 会下载模型）"):
+    with st.spinner("解析 JD、提取并匹配中……（首次启用 Embedding 会下载模型）"):
         jd, results, failed = screen(client, jd_text, files, use_embedding)
     st.session_state["jd"] = jd
     st.session_state["results"] = results
@@ -116,17 +116,25 @@ report = {"jd": jd.model_dump(),
                        "gaps": x["result"].gaps,
                        "dimensions": [d.model_dump() for d in x["result"].dimensions]}
                       for i, x in enumerate(results, 1)]}
-e1, e2, e3 = st.columns([1, 1, 2])
+e1, e2, e3, _ = st.columns(
+    [1.25, 1.05, 1.35, 4.0], gap="small", vertical_alignment="bottom"
+)
 with e1:
-    top_n = st.number_input("导出 Top N", 1, len(results), min(10, len(results)))
+    top_n = st.number_input(
+        "导出 Top N", 1, len(results), min(10, len(results)), step=1
+    )
 with e2:
     st.download_button(
         "导出 Excel", report_to_xlsx_bytes(report, int(top_n)),
         file_name="screening_result.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        icon=":material/download:",
+        width="stretch")
 with e3:
     st.download_button("下载完整 JSON", json.dumps(report, ensure_ascii=False, indent=2),
-                       file_name="batch_results.json", mime="application/json")
+                       file_name="batch_results.json", mime="application/json",
+                       icon=":material/download:",
+                       width="stretch")
 
 st.divider()
 
