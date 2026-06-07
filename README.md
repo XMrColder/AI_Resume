@@ -69,7 +69,6 @@ DEEPSEEK_API_KEY=sk-你的key
 ```bash
 streamlit run app.py --server.headless true
 ```
-![img.png](img.png)
 粘贴 JD → 上传简历 PDF → 开始筛选 → 查看排序表与详情 → 导出 Excel。
 
 ### 命令行（按阶段）
