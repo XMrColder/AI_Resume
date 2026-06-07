@@ -1,39 +1,6 @@
-# 密钥与本地配置
-.env
-.env.*
-!.env.example
-
-# 本地候选人和岗位数据
-resume/
-JD/
-
-# Python 字节码和缓存
+/.env
+/resume/
+/.venv/
+/.idea/
+/JD/
 __pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-
-# 虚拟环境
-.venv/
-venv/
-env/
-ENV/
-
-# IDE 和编辑器文件
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# 操作系统杂项文件
-.DS_Store
-Thumbs.db
-
-# 忽略数据目录外的生成报告和缓存
-*.match.json
-*.questions.json
-batch_results.json

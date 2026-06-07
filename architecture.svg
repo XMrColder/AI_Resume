@@ -1,0 +1,108 @@
+<svg width="820" height="770" viewBox="0 0 820 770" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI 简历筛选助手系统架构图">
+<style>
+  text{font-family:'Segoe UI','Helvetica Neue',Arial,'PingFang SC','Microsoft YaHei',sans-serif;}
+  .h1{font-size:21px;font-weight:700;fill:#0f172a;}
+  .h2{font-size:12.5px;fill:#64748b;}
+  .bt{font-size:14px;font-weight:600;}
+  .bs{font-size:11px;fill:#64748b;}
+  .lg{font-size:11px;fill:#475569;}
+  .fz{font-size:11.5px;fill:#475569;}
+  .arr{stroke:#94a3b8;stroke-width:1.6;fill:none;}
+  rect.io{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.4;}
+  rect.llm{fill:#f0fdfa;stroke:#14b8a6;stroke-width:1.4;}
+  rect.match{fill:#f5f3ff;stroke:#8b5cf6;stroke-width:1.4;}
+  rect.orch{fill:#fffbeb;stroke:#f59e0b;stroke-width:1.4;}
+  rect.foot{fill:#f8fafc;stroke:#cbd5e1;stroke-width:1.2;}
+  .t-io{fill:#334155;}.t-llm{fill:#0f766e;}.t-match{fill:#6d28d9;}.t-orch{fill:#b45309;}
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1 L8 5 L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<rect width="820" height="770" fill="#ffffff"/>
+
+<text class="h1" x="60" y="42">AI 简历筛选助手 · 系统架构</text>
+<text class="h2" x="61" y="64">DeepSeek V4-Pro · sentence-transformers(bge) · Streamlit</text>
+
+<!-- legend -->
+<rect x="520" y="27" width="13" height="13" rx="3" class="io"/><text class="lg" x="540" y="38">输入/输出</text>
+<rect x="650" y="27" width="13" height="13" rx="3" class="llm"/><text class="lg" x="670" y="38">LLM 调用</text>
+<rect x="520" y="49" width="13" height="13" rx="3" class="match"/><text class="lg" x="540" y="60">匹配打分</text>
+<rect x="650" y="49" width="13" height="13" rx="3" class="orch"/><text class="lg" x="670" y="60">编排/界面</text>
+
+<!-- 入口 -->
+<rect x="80" y="86" width="660" height="44" rx="10" class="orch"/>
+<text class="bt t-orch" x="410" y="104" text-anchor="middle">运行入口</text>
+<text class="bs" x="410" y="120" text-anchor="middle">streamlit run app.py　·　各模块命令行 CLI</text>
+
+<!-- inputs -->
+<rect x="80" y="158" width="300" height="46" rx="10" class="io"/>
+<text class="bt t-io" x="230" y="180" text-anchor="middle">简历 PDF</text>
+<text class="bs" x="230" y="195" text-anchor="middle">可批量多份</text>
+<rect x="440" y="158" width="300" height="46" rx="10" class="io"/>
+<text class="bt t-io" x="590" y="180" text-anchor="middle">JD 文本</text>
+<text class="bs" x="590" y="195" text-anchor="middle">粘贴文本 / .txt</text>
+
+<!-- parsers -->
+<rect x="80" y="240" width="300" height="60" rx="10" class="llm"/>
+<text class="bt t-llm" x="230" y="266" text-anchor="middle">resume_extract.py</text>
+<text class="bs" x="230" y="284" text-anchor="middle">P1 · PDF → 结构化简历 JSON</text>
+<rect x="440" y="240" width="300" height="60" rx="10" class="llm"/>
+<text class="bt t-llm" x="590" y="266" text-anchor="middle">jd_parser.py</text>
+<text class="bs" x="590" y="284" text-anchor="middle">P2 · JD → 岗位要求 JSON</text>
+
+<!-- matcher -->
+<rect x="210" y="346" width="400" height="60" rx="10" class="match"/>
+<text class="bt t-match" x="410" y="372" text-anchor="middle">matcher.py ＋ embedding.py</text>
+<text class="bs" x="410" y="390" text-anchor="middle">P2/3 · 规则 + 语义 混合打分（可解释）</text>
+
+<!-- batch -->
+<rect x="250" y="452" width="320" height="52" rx="10" class="orch"/>
+<text class="bt t-orch" x="410" y="476" text-anchor="middle">batch.py</text>
+<text class="bs" x="410" y="493" text-anchor="middle">P4 · 批量循环 + 排序（缓存 / 失败隔离）</text>
+
+<!-- branch -->
+<rect x="80" y="540" width="300" height="60" rx="10" class="llm"/>
+<text class="bt t-llm" x="230" y="566" text-anchor="middle">interview_gen.py</text>
+<text class="bs" x="230" y="584" text-anchor="middle">P5 · 生成针对性面试题</text>
+<rect x="440" y="540" width="300" height="60" rx="10" class="io"/>
+<text class="bt t-io" x="590" y="566" text-anchor="middle">export_excel.py</text>
+<text class="bs" x="590" y="584" text-anchor="middle">P7 · Top N 导出 Excel</text>
+
+<!-- finals -->
+<rect x="140" y="646" width="180" height="42" rx="10" class="io"/>
+<text class="bt t-io" x="230" y="666" text-anchor="middle" style="font-size:13px">面试问题</text>
+<text class="bs" x="230" y="681" text-anchor="middle">.questions.json</text>
+<rect x="500" y="646" width="180" height="42" rx="10" class="io"/>
+<text class="bt t-io" x="590" y="666" text-anchor="middle" style="font-size:13px">Excel 排名表</text>
+<text class="bs" x="590" y="681" text-anchor="middle">screening_result.xlsx</text>
+
+<!-- footer -->
+<rect x="80" y="706" width="660" height="48" rx="8" class="foot"/>
+<text class="fz" x="410" y="726" text-anchor="middle">外部依赖：DeepSeek V4-Pro API（P1 / P2 / P5）　·　bge-small-zh 句向量（P3）</text>
+<text class="fz" x="410" y="743" text-anchor="middle">Phase 6 · app.py 用 Streamlit 将全部模块串成 Web 应用；.env 管理密钥</text>
+
+<!-- arrows -->
+<path class="arr" d="M410 130 L410 144"/>
+<path class="arr" d="M230 144 L590 144"/>
+<path class="arr" d="M230 144 L230 156" marker-end="url(#a)"/>
+<path class="arr" d="M590 144 L590 156" marker-end="url(#a)"/>
+
+<path class="arr" d="M230 204 L230 240" marker-end="url(#a)"/>
+<path class="arr" d="M590 204 L590 240" marker-end="url(#a)"/>
+
+<path class="arr" d="M230 300 L230 322 L340 322 L340 346" marker-end="url(#a)"/>
+<path class="arr" d="M590 300 L590 322 L480 322 L480 346" marker-end="url(#a)"/>
+
+<path class="arr" d="M410 406 L410 452" marker-end="url(#a)"/>
+
+<path class="arr" d="M410 504 L410 520"/>
+<path class="arr" d="M230 520 L590 520"/>
+<path class="arr" d="M230 520 L230 540" marker-end="url(#a)"/>
+<path class="arr" d="M590 520 L590 540" marker-end="url(#a)"/>
+
+<path class="arr" d="M230 600 L230 646" marker-end="url(#a)"/>
+<path class="arr" d="M590 600 L590 646" marker-end="url(#a)"/>
+</svg>
